@@ -2,8 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from config.ConfigDB import async_session, engine
-from logging import basicConfig, INFO, info
-from time import sleep
+from logging import basicConfig, INFO, info, debug
 import Respository
 import utils
 import asyncio
@@ -44,26 +43,29 @@ async def grossery_service():
             await engine.dispose()
         
             for product in products_db:
-                info(f'PRODUCT:  {product.description}')
-                if not utils.is_to_update(product.last_update, 10):
-                    info(f'Its not time to update:  {product.description}')
+                description = product.description
+                
+                if not utils.is_to_update(product.last_update, 600):
+                    debug(f'Its not time to update:  {description}')
                     continue
                 
+                info(f'PRODUCT:  {description}')
                 async with session.begin():
-                    search_product(product.description)
-                    lower_prices = get_lower_prices(product.description)
-                    if(len(lower_prices)):
-                        await Respository.delete_product_info_by_id_product(session, product.description)
+                    search_product(description)
+                    lower_prices = get_lower_prices(description)
+                    if len(lower_prices):
+                        info(f'{str(len(lower_prices))} new prices were found for the product  {description}')
+                        await Respository.delete_product_info_by_id_product(session, description)
                         await Respository.create_products(session, lower_prices)
-                        await Respository.update_last_update(session, product.description)
-                        await session.commit()
+                        await Respository.update_last_update(session, description)
+                    else:
+                        info(f'No price was found')
+                        await Respository.delete_product_by_description(session, description)
+                        await Respository.delete_product_info_by_id_product(session, description)
+                    await session.commit()
                 await engine.dispose()
-                sleep(1)
 
-options = webdriver.ChromeOptions()
-options.add_argument("--headless")
-driver = webdriver.Chrome(options=options)
-print('capabilities -> ', driver.capabilities)
+driver = webdriver.Chrome()
 driver.create_options()
 driver.maximize_window()
 link = 'https://buscapreco.sefaz.am.gov.br/home'

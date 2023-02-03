@@ -20,6 +20,14 @@ async def delete_product_info_by_id_product(db: AsyncSession, id_product):
     )
     return response
 
+async def delete_product_by_description(db: AsyncSession, description):
+    info(f'Deleting product {description} from database')
+    response = await db.execute(
+        delete(product_model)
+        .where(product_model.description == description)
+    )
+    return response
+
 async def update_last_update(db: AsyncSession, description: str) -> product_model:
     await db.execute(update(product_model)
         .where(product_model.description == description)

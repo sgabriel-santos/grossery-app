@@ -7,6 +7,7 @@ Create Date: 2023-01-30 00:35:17.415635
 """
 from alembic import op
 import sqlalchemy as sa
+from src.migrations.populate_table import populate_history
 
 
 # revision identifiers, used by Alembic.
@@ -27,6 +28,7 @@ def upgrade() -> None:
         sa.Column('price', sa.Float, nullable=False),
         sa.Column('location', sa.String(1000), nullable=False),
     )
+    populate_history(table_name)
 
 
 def downgrade() -> None:
