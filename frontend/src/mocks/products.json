@@ -1,0 +1,41 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Macarrão Rubi",
+      "market": "Mercadinho Dois Irmãos",
+      "price": 1.57,
+      "address": [1.23, -0.23]
+    },
+    {
+      "id": 2,
+      "name": "Macarrão Rubi",
+      "market": "Mercadinho Dois Irmãos",
+      "price": 1.57,
+      "address": [1.23, -0.23]
+    },
+    {
+      "id": 3,
+      "name": "Macarrão Rubi",
+      "market": "Mercadinho Dois Irmãos",
+      "price": 1.57,
+      "address": [1.23, -0.23]
+    },
+    {
+      "id": 4,
+      "name": "Macarrão Rubi",
+      "market": "Mercadinho Dois Irmãos",
+      "price": 1.57,
+      "address": [1.23, -0.23]
+    },
+    {
+      "id": 5,
+      "name": "Macarrão Rubi",
+      "market": "Mercadinho Dois Irmãos",
+      "price": 1.57,
+      "address": [1.23, -0.23]
+    }
+  ],
+  "search": "macarrão",
+  "filterBy": "CHEAPER"
+}
