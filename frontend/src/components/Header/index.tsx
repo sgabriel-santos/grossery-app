@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const searchInput = async () => {
-    onSearchProduct(input);
+    onSearchProduct([input]);
   };
 
   const handleOnClickSearch = () => {
@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
   };
 
   const handleOnClickTitle = () => {
-    onSearchProduct('');
+    onSearchProduct(['']);
     navigate('/', { replace: true });
   };
 

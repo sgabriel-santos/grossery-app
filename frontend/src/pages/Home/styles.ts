@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
@@ -23,7 +23,7 @@ export const Container = styled.div`
     form {
       width: 100%;
 
-      button[type='submit'] {
+      button[type="submit"] {
         width: 100%;
         height: 6.4rem;
         border: none;
@@ -31,7 +31,7 @@ export const Container = styled.div`
         padding: 1.4rem;
         background-color: ${(props) => props.theme.colors.primary};
 
-        color: ${props => props.theme.colors.buttonText};
+        color: ${(props) => props.theme.colors.buttonText};
         font-weight: 700;
         text-align: center;
         font-size: 2.2rem;
@@ -40,5 +40,36 @@ export const Container = styled.div`
         margin-top: 1.6rem;
       }
     }
+  }
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  width: calc(47.5rem + 4rem);
+  > .buttons {
+    width: 4rem;
+    padding: 0.8rem 0rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      font-size: 2rem;
+      color: #fff;
+
+      :first-child {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+    :hover {
+      cursor: pointer;
+    }
+  }
+  transform: translateX(calc(-4rem));
+
+  & + div {
+    margin-top: 1.6rem;
   }
 `;

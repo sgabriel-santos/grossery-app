@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "../../hooks/useLocation";
 import { CustomMap } from "../CustomMap";
 import { Modal } from "../Modal";
 
@@ -16,6 +17,7 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ item, id }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { coords } = useLocation();
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -33,6 +35,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ item, id }) => {
       minimumFractionDigits: 2,
     }).format(aPrice);
   };
+
+  useEffect(() => {
+    if (window.google) {
+      window.google.maps.geometry.spherical.computeDistanceBetween(
+        { lat: coords.latitude, lng: coords.longitude },
+        { lat: coords.latitude, lng: coords.longitude }
+      );
+    }
+  }, [coords.latitude, coords.longitude]);
 
   return (
     <Container id={id}>

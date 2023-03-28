@@ -14,6 +14,7 @@ export const ProductList: React.FC = () => {
   const renderProducts = () => {
     const result = data.map(({ business, description, location, price }) => (
       <ProductCard
+        key={String(business + location)}
         id={String(business + location)}
         item={{
           destination: location,

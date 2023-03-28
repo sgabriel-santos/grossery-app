@@ -1,7 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
-import products from "../mocks/products.json";
 import { Filters, Item } from "../models/Products";
 import api from "../services/api";
 
@@ -10,43 +8,47 @@ interface SearchInput {
 }
 
 interface SearchProps {
-  onSearchProduct: (aProduct: string) => void;
+  onSearchProduct: (aProducts: string[]) => void;
+  onSelectFilter: (aFilter: Filters) => void;
   isLoading: boolean;
   data: Item[] | undefined;
-  search: string;
+  search: string[];
+  filter: Filters;
+  isError: boolean;
 }
 
 const SearchContext = createContext({} as SearchProps);
 
 export const SearchProvider: React.FC<SearchInput> = ({ children }) => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string[]>([""]);
   const [filter, setFilter] = useState(Filters.closer);
 
-  const onSearchProduct = (aProduct: string) => {
-    setSearch(aProduct);
+  const onSearchProduct = (aProducts: string[]) => {
+    setSearch(aProducts);
   };
 
-  const getProduct = async (aProduct: string) => {
+  const onSelectFilter = (aFilter: Filters) => {
+    setFilter(aFilter);
+  };
+
+  const getProduct = async (aProducts: string[]) => {
     try {
-      const { data } = await api.get<Item[]>("/products/info", {
-        params: {
-          description: aProduct,
-        },
-      });
+      const { data } = await api.post<Item[]>("/products/info/many", aProducts);
       return data;
     } catch {
       throw Error();
     }
   };
 
-  const { data, isFetching, isLoading } = useQuery(
-    ["search", search, filter],
+  const { data, isFetching, isLoading, isError } = useQuery(
+    ["search", search],
     () => {
-      if (!search) return;
+      if (search.length === 1 && !search[0].length) return;
       return getProduct(search);
     },
     {
       retry: false,
+      refetchOnWindowFocus: false,
     }
   );
 
@@ -54,8 +56,11 @@ export const SearchProvider: React.FC<SearchInput> = ({ children }) => {
     <SearchContext.Provider
       value={{
         onSearchProduct,
+        onSelectFilter,
         data,
         search,
+        filter,
+        isError,
         isLoading: isLoading || isFetching,
       }}
     >
