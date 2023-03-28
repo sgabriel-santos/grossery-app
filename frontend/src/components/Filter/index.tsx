@@ -1,6 +1,5 @@
 import React from "react";
 import { useSearch } from "../../hooks/useSearch";
-import { Dropdown } from "../Dropdown";
 
 import { Container } from "./styles";
 

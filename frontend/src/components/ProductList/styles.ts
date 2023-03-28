@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   @media (max-width: 1400px) {
@@ -44,4 +44,18 @@ export const Container = styled.div`
   grid-row-gap: 4rem;
 
   transition: grid-column-gap 0.2s;
+
+  &::-webkit-scrollbar {
+    width: 0.8rem;
+  }
+  
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
 `;
