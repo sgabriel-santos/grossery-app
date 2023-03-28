@@ -26,20 +26,4 @@ export const GlobalStyle = createGlobalStyle`
       /* a cada 1 rem é 10px */
        font-size: 62.5%;
     }
-
-    @media (max-width: 1024px) {
-      html {
-          /* a cada 1 rem é 10px */
-          font-size: 56.5%;
-        }
-
-    }
-
-    @media (max-width: 900px) {
-      html {
-          /* a cada 1 rem é 10px */
-          font-size: 52.5%;
-        }
-
-    }
 `;

@@ -31,19 +31,20 @@ export const CustomMap: React.FC<CustomMapInput> = ({ destination }) => {
         ) : (
           <DirectionsService
             options={{
-              origin: "69044170",
+              origin: { lat: coords.latitude, lng: coords.longitude },
               destination,
               travelMode: window.google.maps.TravelMode.DRIVING,
             }}
-            callback={(result) => {
+            callback={(result, status) => {
               console.log("result", result);
+              console.log("status", status);
               setDirections(result);
             }}
           />
         )}
       </GoogleMap>
     );
-  }, [coords.latitude, coords.longitude, destination, directions, origin]);
+  }, [coords.latitude, coords.longitude, destination, directions]);
 
   return <Container>{isLoaded ? renderMap() : <></>}</Container>;
 };
