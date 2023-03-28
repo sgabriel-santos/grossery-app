@@ -60,8 +60,9 @@ async def grossery_service():
                         await Respository.update_last_update(session, description)
                     else:
                         info(f'No price was found')
-                        await Respository.delete_product_by_description(session, description)
-                        await Respository.delete_product_info_by_id_product(session, description)
+                        info(f'Keeping old princes on the database')
+                        # await Respository.delete_product_info_by_id_product(session, description)
+                        # await Respository.delete_product_by_description(session, description)
                     await session.commit()
                 await engine.dispose()
 
