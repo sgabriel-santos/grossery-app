@@ -30,6 +30,18 @@ async def get_product_info_by_id_product(db: AsyncSession, description: str):
     )
     return product_list.all()
 
+async def get_info_from_many_products(db: AsyncSession, products: list):
+    if not len(products): return []
+    
+    if len(products) > 1:
+        response = await db.execute(
+            f"SELECT * FROM product_info \
+            where id_product in {tuple(products)} order by price;"
+        )
+        return response.all() 
+    
+    return await get_product_info_by_id_product(db, products[0])
+
 async def get_product_by_description(db: AsyncSession, description: str):
     product_list = await db.execute(
         select(product_model)

@@ -22,6 +22,18 @@ async def get_product_info_by_id_product(db: AsyncSession, description) -> List[
     except:
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Server Error")
+    
+async def get_info_from_many_products(db: AsyncSession, products: list) -> List[product_schema]:
+    for description in products:
+        if len(description) < 4:
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE, 
+                detail="product must be more than 3 characters"
+            )
+        await create_product(db, description)
+    response = await ProductRepository.get_info_from_many_products(db, products)
+    await db.commit()
+    return response
 
 async def get_products(db: AsyncSession) -> List[product_schema]:
     return await ProductRepository.get_products(db)

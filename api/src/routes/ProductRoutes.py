@@ -15,3 +15,7 @@ async def get_products(db: AsyncSession = Depends(get_session)):
 @router.get("/info", response_model=List[ProductInfoSchema.ProductInfo])
 async def get_products_info(description: str, db: AsyncSession = Depends(get_session)):
     return await ProductController.get_product_info_by_id_product(db, description)
+
+@router.post("/info/many", response_model=List[ProductInfoSchema.ProductInfo])
+async def get_info_from_many_products(products: list, db: AsyncSession = Depends(get_session)):
+    return await ProductController.get_info_from_many_products(db, products)
